@@ -21,4 +21,5 @@ Enables Discord [Rich Presence](https://discord.com/rich-presence) For Honkai: S
 
 
 i did nothing special, just edited the id and added the software name xD
+<br><br>
 edited with love 💝
