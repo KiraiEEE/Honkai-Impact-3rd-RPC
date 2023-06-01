@@ -11,16 +11,16 @@ namespace StarRailDiscordRpc;
 
 internal static class Program
 {
-    private const string AppId_Zh = "1100788944901247026";
-    private const string AppId_En = "1100789242029948999";
+    private const string Impact = "1113930060513153096";
+    private const string StarRail = "1100789242029948999";
 
     [STAThread]
     static void Main()
     {
-        using var self = new Mutex(true, "StarRail DiscordRPC", out var allow);
+        using var self = new Mutex(true, "Honkai DiscordRPC", out var allow);
         if (!allow)
         {
-            MessageBox.Show("StarRail DiscordRPC is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Honkai DiscordRPC is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Environment.Exit(-1);
         }
 
@@ -33,8 +33,8 @@ internal static class Program
 
         Task.Run(async () =>
         {
-            using var clientZh = new DiscordRpcClient(AppId_Zh);
-            using var clientEn = new DiscordRpcClient(AppId_En);
+            using var clientZh = new DiscordRpcClient(Impact);
+            using var clientEn = new DiscordRpcClient(StarRail);
             clientZh.Initialize();
             clientEn.Initialize();
 
@@ -47,7 +47,7 @@ internal static class Program
                 Debug.Print($"InLoop");
 
                 var miHoyo = true;
-                var handle = FindWindow("UnityWndClass", "崩坏：星穹铁道");
+                var handle = FindWindow("UnityWndClass", "Honkai Impact 3rd");
                 if (handle == IntPtr.Zero)
                 {
                     // hoyoverse
@@ -81,7 +81,7 @@ internal static class Program
                         if (!playing)
                         {
                             playing = true;
-                            clientZh.UpdateRpc("logo", "崩坏：星穹铁道");
+                            clientZh.UpdateRpc("iconx", "Honkai Impact 3rd");
                             Debug.Print($"Set RichPresence to {process.ProcessName}");
                         }
                         else
@@ -135,7 +135,7 @@ internal static class Program
         {
             BalloonTipIcon = ToolTipIcon.Info,
             ContextMenu = notifyMenu,
-            Text = "StarRail DiscordRPC",
+            Text = "Honkai DiscordRPC",
             Icon = Properties.Resources.tray,
             Visible = true,
         };
