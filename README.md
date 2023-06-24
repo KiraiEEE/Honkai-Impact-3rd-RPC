@@ -1,21 +1,26 @@
 # Honkai RPC 
-  
-  
-Enables Discord [Rich Presence](https://discord.com/rich-presence) For Honkai: Star Rail and Honkai Impact 3rd.
+
+Enables Discord [Rich Presence](https://discord.com/rich-presence) For Honkai Impact 3rd.
 
 
 ### Purpose of forking
-* Adding Honkai Impact 3rd instead of Star Rail since it has already an RPC now
+* Replacing Star Rail by Honkai Impact 3rd since it has already an RPC now
   
 ### Info
 * This application will auto launch on system start. If you don't want to do this, disable it in taskmgr.  
    
   
 ### Preview (discord might look different cuz its themed)
-![01](https://github.com/KiraiEEE/Honkai-RPC/assets/54278089/9672fbe1-4d67-4d42-9cc3-50cb61ac0ae9)
+![image](https://github.com/KiraiEEE/Honkai-RPC/assets/54278089/03fe83f6-d2b0-4a38-9bd4-db67278ef83a)
 
 
 
-i did nothing special, just edited the id and added the software name xD
-<br><br>
-edited with love 💝
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+This fork is based on the original Star Rail Rpc project ([link to original repository](https://github.com/Kxnrl/StarRailRpc)).
+
