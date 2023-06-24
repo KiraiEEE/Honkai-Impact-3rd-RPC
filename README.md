@@ -15,7 +15,6 @@ Enables Discord [Rich Presence](https://discord.com/rich-presence) For Honkai Im
 
 
 
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
