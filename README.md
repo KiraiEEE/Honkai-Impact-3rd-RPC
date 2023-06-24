@@ -3,6 +3,8 @@
   
 Enables Discord [Rich Presence](https://discord.com/rich-presence) For Honkai: Star Rail and Honkai Impact 3rd.
 
+**(PS : Star Rail now has a registered RPC so u gonna use this just for Honkai Impact)**
+
 ### Purpose of forking
 * Adding Honkai Impact 3rd to the table.  
   
