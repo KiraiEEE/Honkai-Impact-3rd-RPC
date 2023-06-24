@@ -1,0 +1,16 @@
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\StarRailDiscordRpc.exe.config
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\StarRailDiscordRpc.exe
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\StarRailDiscordRpc.pdb
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\DiscordRPC.dll
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\Newtonsoft.Json.dll
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\DiscordRPC.pdb
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\DiscordRPC.xml
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\bin\Debug\Newtonsoft.Json.xml
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailRpc.csproj.AssemblyReference.cache
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailRpc.csproj.SuggestedBindingRedirects.cache
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailDiscordRpc.Properties.Resources.resources
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailRpc.csproj.GenerateResource.cache
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailRpc.csproj.CoreCompileInputs.cache
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailRpc.csproj.CopyComplete
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailDiscordRpc.exe
+C:\Users\benfe\Downloads\Honkai-RPC-main\Honkai-RPC-main\src\obj\Debug\StarRailDiscordRpc.pdb

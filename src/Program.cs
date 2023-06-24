@@ -12,7 +12,6 @@ namespace StarRailDiscordRpc;
 internal static class Program
 {
     private const string Impact = "1113930060513153096";
-    private const string StarRail = "1100789242029948999";
 
     [STAThread]
     static void Main()
@@ -33,10 +32,8 @@ internal static class Program
 
         Task.Run(async () =>
         {
-            using var clientZh = new DiscordRpcClient(Impact);
-            using var clientEn = new DiscordRpcClient(StarRail);
-            clientZh.Initialize();
-            clientEn.Initialize();
+            using var clientImp = new DiscordRpcClient(Impact);
+            clientImp.Initialize();
 
             var playing = false;
 
@@ -59,13 +56,10 @@ internal static class Program
                 {
                     Debug.Print($"Not found game process.");
                     playing = false;
-                    if (clientEn.CurrentPresence != null)
+
+                    if (clientImp.CurrentPresence != null)
                     {
-                        clientEn.ClearPresence();
-                    }
-                    if (clientZh.CurrentPresence != null)
-                    {
-                        clientZh.ClearPresence();
+                        clientImp.ClearPresence();
                     }
                     continue;
                 }
@@ -81,21 +75,8 @@ internal static class Program
                         if (!playing)
                         {
                             playing = true;
-                            clientZh.UpdateRpc("iconx", "Honkai Impact 3rd");
+                            clientImp.UpdateRpc("iconx", "Honkai Impact 3rd");
                             Debug.Print($"Set RichPresence to {process.ProcessName}");
-                        }
-                        else
-                        {
-                            Debug.Print($"Keep RichPresence to {process.ProcessName}");
-                        }
-                    }
-                    else
-                    {
-                        if (!playing)
-                        {
-                            playing = true;
-                            clientEn.UpdateRpc("logo", "Honkai: Star Rail");
-                            Debug.Print($"Set RichPresence to  {process.ProcessName}");
                         }
                         else
                         {
@@ -106,19 +87,12 @@ internal static class Program
                 catch (Exception e)
                 {
                     playing = false;
-                    if (clientEn.CurrentPresence != null)
+                    if (clientImp.CurrentPresence != null)
                     {
-                        clientEn.ClearPresence();
-                    }
-                    if (clientZh.CurrentPresence != null)
-                    {
-                        clientZh.ClearPresence();
+                        clientImp.ClearPresence();
                     }
                     Debug.Print($"{e.Message}{Environment.NewLine}{e.StackTrace}");
                 }
-
-                GC.Collect();
-                GC.WaitForFullGCComplete();
             }
         });
 
