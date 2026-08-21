@@ -13,6 +13,7 @@ internal static class Program
     private const string AppId = "1540429775439397034";
     private const string GameClassName = "UnityWndClass";
     private const string GameWindowName = "Honkai Impact 3rd";
+    private static readonly TimeSpan MinUpdateInterval = TimeSpan.FromSeconds(15);
 
     [STAThread]
     static void Main()
@@ -37,6 +38,7 @@ internal static class Program
             client.Initialize();
 
             var playing = false;
+            var lastUpdateTime = DateTime.MinValue;
 
             while (true)
             {
@@ -58,6 +60,10 @@ internal static class Program
                 if (playing)
                     continue;
 
+                var now = DateTime.UtcNow;
+                if (now - lastUpdateTime < MinUpdateInterval)
+                    continue;
+
                 try
                 {
                     GetWindowThreadProcessId(handle, out var pid);
@@ -65,6 +71,7 @@ internal static class Program
                     Debug.Print($"Game found: {process.ProcessName} (PID {pid})");
 
                     playing = true;
+                    lastUpdateTime = DateTime.UtcNow;
                     client.SetPresence(new RichPresence
                     {
                         Assets = new Assets
