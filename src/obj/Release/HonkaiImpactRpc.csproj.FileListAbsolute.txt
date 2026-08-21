@@ -7,7 +7,6 @@ C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\bin\Release\DiscordRPC.pdb
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\bin\Release\DiscordRPC.xml
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\bin\Release\Newtonsoft.Json.xml
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\obj\Release\HonkaiImpactRpc.csproj.AssemblyReference.cache
-C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\obj\Release\HonkaiImpactRpc.exe.config
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\obj\Release\HonkaiImpactRpc.Properties.Resources.resources
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\obj\Release\HonkaiImpactRpc.csproj.GenerateResource.cache
 C:\Users\KiraiEEE\Desktop\Honkai-Impact-3rd-RPC\src\obj\Release\HonkaiImpactRpc.csproj.CoreCompileInputs.cache
