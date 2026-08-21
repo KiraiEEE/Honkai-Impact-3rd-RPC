@@ -77,13 +77,10 @@ internal static class Program
                     lastUpdateTime = DateTime.UtcNow;
                     _client.SetPresence(new RichPresence
                     {
-                        Details = "Playing Honkai Impact 3rd",
                         Assets = new Assets
                         {
                             LargeImageKey = "logo",
                             LargeImageText = "Honkai Impact 3rd",
-                            SmallImageKey = "honkai",
-                            SmallImageText = "Honkai Impact 3rd",
                         },
                         Timestamps = Timestamps.Now,
                     });
