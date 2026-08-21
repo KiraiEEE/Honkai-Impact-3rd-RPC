@@ -1,7 +1,6 @@
 ﻿using DiscordRPC;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,45 +44,40 @@ internal static class Program
 
                 var handle = FindWindow(GameClassName, GameWindowName);
 
-                if (handle == IntPtr.Zero)
+                if (handle == IntPtr.Zero || !IsWindow(handle))
                 {
                     if (playing)
                     {
                         playing = false;
                         client.ClearPresence();
+                        Debug.Print("Game window lost, cleared presence");
                     }
                     continue;
                 }
 
+                if (playing)
+                    continue;
+
                 try
                 {
-                    var process = Process.GetProcesses()
-                        .FirstOrDefault(x => x.MainWindowHandle == handle);
+                    GetWindowThreadProcessId(handle, out var pid);
+                    using var process = Process.GetProcessById(pid);
+                    Debug.Print($"Game found: {process.ProcessName} (PID {pid})");
 
-                    if (process == null)
-                        continue;
-
-                    Debug.Print($"Found process: {process.ProcessName}");
-
-                    if (!playing)
+                    playing = true;
+                    client.SetPresence(new RichPresence
                     {
-                        playing = true;
-                        client.SetPresence(new RichPresence
+                        Assets = new Assets
                         {
-                            Assets = new Assets
-                            {
-                                LargeImageKey = "logo",
-                                LargeImageText = "Honkai Impact 3rd",
-                            },
-                            Timestamps = Timestamps.Now,
-                        });
-                        Debug.Print("Set RichPresence");
-                    }
+                            LargeImageKey = "logo",
+                            LargeImageText = "Honkai Impact 3rd",
+                        },
+                        Timestamps = Timestamps.Now,
+                    });
+                    Debug.Print("RichPresence set");
                 }
                 catch (Exception e)
                 {
-                    playing = false;
-                    client.ClearPresence();
                     Debug.Print($"Error: {e.Message}{Environment.NewLine}{e.StackTrace}");
                 }
             }
@@ -128,4 +122,11 @@ internal static class Program
 
     [DllImport("user32.dll")]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool IsWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll")]
+    private static extern int GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
 }
