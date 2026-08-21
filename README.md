@@ -16,7 +16,7 @@
 
 <p align="center">
   <a href="https://github.com/KiraiEEE/Honkai-Impact-3rd-RPC/releases/latest">
-    <img src="https://img.shields.io/badge/Download-v2.0.0-blue?style=for-the-badge&logo=github" alt="Download" />
+    <img src="https://img.shields.io/badge/⬇_Download_Latest_Release-v2.0.0-238636?style=for-the-badge&logo=github&logoColor=white" alt="Download" />
   </a>
 </p>
 
