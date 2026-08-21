@@ -2,30 +2,28 @@
 using System;
 using System.Reflection;
 
-namespace StarRailDiscordRpc;
+namespace HonkaiImpactRpc;
 
 internal static class AutoStart
 {
+    private const string RunKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
+    private const string AppRegistryValue = "HonkaiImpact3-DiscordRpc";
+
     public static void Set()
     {
         try
         {
-            // Open Base Key.
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                .OpenSubKey(RunKeyPath, true);
 
             if (baseKey == null)
-            {
-                // wtf?
-                Console.WriteLine(@"Cannot find HKCU\Software\Microsoft\Windows\CurrentVersion\Run");
                 return;
-            }
 
-            baseKey.SetValue("StarRail-DiscordRpc", Assembly.GetEntryAssembly().Location);
-            Console.WriteLine("AutoStartup has been set.");
+            baseKey.SetValue(AppRegistryValue, Assembly.GetEntryAssembly().Location);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to set autostartup: {e.Message}");
+            DebugPrint($"Failed to set autostartup: {e.Message}");
         }
     }
 
@@ -33,22 +31,17 @@ internal static class AutoStart
     {
         try
         {
-            // Open Base Key.
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                .OpenSubKey(RunKeyPath, true);
 
             if (baseKey == null)
-            {
-                // wtf?
-                Console.WriteLine(@"Cannot find HKCU\Software\Microsoft\Windows\CurrentVersion\Run");
                 return;
-            }
 
-            baseKey.DeleteValue("StarRail-DiscordRpc", false);
-            Console.WriteLine("AutoStartup has been deleted.");
+            baseKey.DeleteValue(AppRegistryValue, false);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to set autostartup: {e.Message}");
+            DebugPrint($"Failed to remove autostartup: {e.Message}");
         }
     }
 
@@ -56,26 +49,26 @@ internal static class AutoStart
     {
         try
         {
-            // Open Base Key.
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64).OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                .OpenSubKey(RunKeyPath, true);
 
             if (baseKey == null)
-            {
-                // wtf?
-                Console.WriteLine(@"Cannot find HKCU\Software\Microsoft\Windows\CurrentVersion\Run");
                 return false;
-            }
 
-            var ace = baseKey.GetValue("StarRail-DiscordRpc");
+            var value = baseKey.GetValue(AppRegistryValue);
             var exe = Assembly.GetEntryAssembly().Location;
-            return exe.Equals(ace);
+            return exe.Equals(value);
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Failed to set autostartup: {e.Message}");
+            DebugPrint($"Failed to check autostartup: {e.Message}");
         }
 
         return false;
     }
-}
 
+    private static void DebugPrint(string message)
+    {
+        System.Diagnostics.Debug.Print(message);
+    }
+}

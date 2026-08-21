@@ -7,19 +7,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace StarRailDiscordRpc;
+namespace HonkaiImpactRpc;
 
 internal static class Program
 {
-    private const string Impact = "1113930060513153096";
+    private const string AppId = "1540429775439397034";
+    private const string GameClassName = "UnityWndClass";
+    private const string GameWindowName = "Honkai Impact 3rd";
 
     [STAThread]
     static void Main()
     {
-        using var self = new Mutex(true, "Honkai DiscordRPC", out var allow);
+        using var self = new Mutex(true, "Honkai Impact 3rd DiscordRPC", out var allow);
         if (!allow)
         {
-            MessageBox.Show("Honkai DiscordRPC is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Honkai Impact 3rd DiscordRPC is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Environment.Exit(-1);
         }
 
@@ -32,8 +34,8 @@ internal static class Program
 
         Task.Run(async () =>
         {
-            using var clientImp = new DiscordRpcClient(Impact);
-            clientImp.Initialize();
+            using var client = new DiscordRpcClient(AppId);
+            client.Initialize();
 
             var playing = false;
 
@@ -41,57 +43,48 @@ internal static class Program
             {
                 await Task.Delay(1000);
 
-                Debug.Print($"InLoop");
-
-                var miHoyo = true;
-                var handle = FindWindow("UnityWndClass", "Honkai Impact 3rd");
-                if (handle == IntPtr.Zero)
-                {
-                    // hoyoverse
-                    miHoyo = false;
-                    handle = FindWindow("UnityWndClass", "Honkai: Star Rail");
-                }
+                var handle = FindWindow(GameClassName, GameWindowName);
 
                 if (handle == IntPtr.Zero)
                 {
-                    Debug.Print($"Not found game process.");
-                    playing = false;
-
-                    if (clientImp.CurrentPresence != null)
+                    if (playing)
                     {
-                        clientImp.ClearPresence();
+                        playing = false;
+                        client.ClearPresence();
                     }
                     continue;
                 }
 
                 try
                 {
-                    var process = Process.GetProcesses().First(x => x.MainWindowHandle == handle);
+                    var process = Process.GetProcesses()
+                        .FirstOrDefault(x => x.MainWindowHandle == handle);
 
-                    Debug.Print($"Check process with {handle} | {process.ProcessName}");
+                    if (process == null)
+                        continue;
 
-                    if (miHoyo)
+                    Debug.Print($"Found process: {process.ProcessName}");
+
+                    if (!playing)
                     {
-                        if (!playing)
+                        playing = true;
+                        client.SetPresence(new RichPresence
                         {
-                            playing = true;
-                            clientImp.UpdateRpc("iconx", "Honkai Impact 3rd");
-                            Debug.Print($"Set RichPresence to {process.ProcessName}");
-                        }
-                        else
-                        {
-                            Debug.Print($"Keep RichPresence to {process.ProcessName}");
-                        }
+                            Assets = new Assets
+                            {
+                                LargeImageKey = "logo",
+                                LargeImageText = "Honkai Impact 3rd",
+                            },
+                            Timestamps = Timestamps.Now,
+                        });
+                        Debug.Print("Set RichPresence");
                     }
                 }
                 catch (Exception e)
                 {
                     playing = false;
-                    if (clientImp.CurrentPresence != null)
-                    {
-                        clientImp.ClearPresence();
-                    }
-                    Debug.Print($"{e.Message}{Environment.NewLine}{e.StackTrace}");
+                    client.ClearPresence();
+                    Debug.Print($"Error: {e.Message}{Environment.NewLine}{e.StackTrace}");
                 }
             }
         });
@@ -101,7 +94,7 @@ internal static class Program
 
         var notifyMenu = new ContextMenu();
         var exitButton = new MenuItem("Exit");
-        var autoButton = new MenuItem("AutoStart" + "    " + (AutoStart.Check() ? "√" : "✘"));
+        var autoButton = new MenuItem("AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718"));
         notifyMenu.MenuItems.Add(0, autoButton);
         notifyMenu.MenuItems.Add(1, exitButton);
 
@@ -109,7 +102,7 @@ internal static class Program
         {
             BalloonTipIcon = ToolTipIcon.Info,
             ContextMenu = notifyMenu,
-            Text = "Honkai DiscordRPC",
+            Text = "Honkai Impact 3rd DiscordRPC",
             Icon = Properties.Resources.tray,
             Visible = true,
         };
@@ -123,31 +116,15 @@ internal static class Program
         autoButton.Click += (_, _) =>
         {
             if (AutoStart.Check())
-            {
                 AutoStart.Remove();
-            }
             else
-            {
                 AutoStart.Set();
-            }
 
-            autoButton.Text = "AutoStart" + "    " + (AutoStart.Check() ? "√" : "✘");
+            autoButton.Text = "AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718");
         };
-
 
         Application.Run();
     }
-
-    private static void UpdateRpc(this DiscordRpcClient client, string key, string text)
-        => client.SetPresence(new RichPresence
-        {
-            Assets = new Assets
-            {
-                LargeImageKey = key,
-                LargeImageText = text,
-            },
-            Timestamps = Timestamps.Now,
-        });
 
     [DllImport("user32.dll")]
     private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
