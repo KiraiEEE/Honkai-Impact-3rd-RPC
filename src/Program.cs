@@ -15,6 +15,9 @@ internal static class Program
     private const string GameWindowName = "Honkai Impact 3rd";
     private static readonly TimeSpan MinUpdateInterval = TimeSpan.FromSeconds(15);
 
+    private static DiscordRpcClient _client;
+    private static NotifyIcon _notifyIcon;
+
     [STAThread]
     static void Main()
     {
@@ -34,8 +37,8 @@ internal static class Program
 
         Task.Run(async () =>
         {
-            using var client = new DiscordRpcClient(AppId);
-            client.Initialize();
+            _client = new DiscordRpcClient(AppId);
+            _client.Initialize();
 
             var playing = false;
             var lastUpdateTime = DateTime.MinValue;
@@ -51,7 +54,7 @@ internal static class Program
                     if (playing)
                     {
                         playing = false;
-                        client.ClearPresence();
+                        _client.ClearPresence();
                         Debug.Print("Game window lost, cleared presence");
                     }
                     continue;
@@ -72,12 +75,15 @@ internal static class Program
 
                     playing = true;
                     lastUpdateTime = DateTime.UtcNow;
-                    client.SetPresence(new RichPresence
+                    _client.SetPresence(new RichPresence
                     {
+                        Details = "Playing Honkai Impact 3rd",
                         Assets = new Assets
                         {
                             LargeImageKey = "logo",
                             LargeImageText = "Honkai Impact 3rd",
+                            SmallImageKey = "honkai",
+                            SmallImageText = "Honkai Impact 3rd",
                         },
                         Timestamps = Timestamps.Now,
                     });
@@ -93,16 +99,18 @@ internal static class Program
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 
-        var notifyMenu = new ContextMenu();
-        var exitButton = new MenuItem("Exit");
-        var autoButton = new MenuItem("AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718"));
-        notifyMenu.MenuItems.Add(0, autoButton);
-        notifyMenu.MenuItems.Add(1, exitButton);
+        var exitButton = new ToolStripMenuItem("Exit");
+        var autoButton = new ToolStripMenuItem("AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718"));
 
-        var notifyIcon = new NotifyIcon()
+        var strip = new ContextMenuStrip();
+        strip.Items.Add(autoButton);
+        strip.Items.Add(new ToolStripSeparator());
+        strip.Items.Add(exitButton);
+
+        _notifyIcon = new NotifyIcon()
         {
             BalloonTipIcon = ToolTipIcon.Info,
-            ContextMenu = notifyMenu,
+            ContextMenuStrip = strip,
             Text = "Honkai Impact 3rd DiscordRPC",
             Icon = Properties.Resources.tray,
             Visible = true,
@@ -110,7 +118,8 @@ internal static class Program
 
         exitButton.Click += (_, _) =>
         {
-            notifyIcon.Visible = false;
+            _client?.ClearPresence();
+            _notifyIcon.Visible = false;
             Thread.Sleep(100);
             Environment.Exit(0);
         };

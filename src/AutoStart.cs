@@ -13,13 +13,13 @@ internal static class AutoStart
     {
         try
         {
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+            using var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                 .OpenSubKey(RunKeyPath, true);
 
-            if (baseKey == null)
+            if (key == null)
                 return;
 
-            baseKey.SetValue(AppRegistryValue, Assembly.GetEntryAssembly().Location);
+            key.SetValue(AppRegistryValue, Assembly.GetEntryAssembly().Location);
         }
         catch (Exception e)
         {
@@ -31,13 +31,13 @@ internal static class AutoStart
     {
         try
         {
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+            using var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
                 .OpenSubKey(RunKeyPath, true);
 
-            if (baseKey == null)
+            if (key == null)
                 return;
 
-            baseKey.DeleteValue(AppRegistryValue, false);
+            key.DeleteValue(AppRegistryValue, false);
         }
         catch (Exception e)
         {
@@ -49,13 +49,13 @@ internal static class AutoStart
     {
         try
         {
-            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
-                .OpenSubKey(RunKeyPath, true);
+            using var key = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+                .OpenSubKey(RunKeyPath, false);
 
-            if (baseKey == null)
+            if (key == null)
                 return false;
 
-            var value = baseKey.GetValue(AppRegistryValue);
+            var value = key.GetValue(AppRegistryValue);
             var exe = Assembly.GetEntryAssembly().Location;
             return exe.Equals(value);
         }
