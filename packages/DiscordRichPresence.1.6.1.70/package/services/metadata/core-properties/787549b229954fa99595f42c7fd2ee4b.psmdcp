@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>Lachee</dc:creator>
+  <dc:description>A .NET implementation of Discord's Rich Presence functionality. This library supports all features of the Rich Presence that the official C++ library supports, plus a few extra.
+
+"Players love to show off what they are playing with Discord’s status feature. With Rich Presence you can add beautiful art and detailed information to show off your game even more. This lets players know what their friends are doing, so they can decide to ask to join in and play together." 
+  - Discord
+
+This is an unoffical, non-discord supported library.</dc:description>
+  <dc:identifier>DiscordRichPresence</dc:identifier>
+  <version>1.6.1.70</version>
+  <keywords>Discord Rich Presence RPC Discord-RPC</keywords>
+  <lastModifiedBy>NuGet.Build.Tasks.Pack, Version=6.14.0.116, Culture=neutral, PublicKeyToken=31bf3856ad364e35;.NET Standard 2.0</lastModifiedBy>
+</coreProperties>
