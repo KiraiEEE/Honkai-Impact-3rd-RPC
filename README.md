@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/badge/Download-v2.0.0-238636?style=for-the-badge&logo=github&logoColor=white" alt="Download" />
   </a>
 </p>
-
+<br>
 
 ## Preview
 
@@ -22,7 +22,7 @@
   <img src="assets/Screenshot 2026-08-22 164612.png"/>
 </p>
 
-<br><br>
+<br>
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
