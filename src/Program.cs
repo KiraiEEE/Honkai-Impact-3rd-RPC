@@ -97,7 +97,8 @@ internal static class Program
         Application.SetCompatibleTextRenderingDefault(false);
 
         var exitButton = new ToolStripMenuItem("Exit");
-        var autoButton = new ToolStripMenuItem("AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718"));
+        var autoButton = new ToolStripMenuItem("AutoStart");
+        autoButton.Checked = AutoStart.Check();
 
         var strip = new ContextMenuStrip();
         strip.Items.Add(autoButton);
@@ -122,12 +123,12 @@ internal static class Program
         };
         autoButton.Click += (_, _) =>
         {
-            if (AutoStart.Check())
-                AutoStart.Remove();
-            else
-                AutoStart.Set();
+            autoButton.Checked = !autoButton.Checked;
 
-            autoButton.Text = "AutoStart    " + (AutoStart.Check() ? "\u221a" : "\u2718");
+            if (autoButton.Checked)
+                AutoStart.Set();
+            else
+                AutoStart.Remove();
         };
 
         Application.Run();

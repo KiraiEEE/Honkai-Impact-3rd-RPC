@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace HonkaiImpactRpc;
@@ -23,7 +24,7 @@ internal static class AutoStart
         }
         catch (Exception e)
         {
-            DebugPrint($"Failed to set autostartup: {e.Message}");
+            Debug.Print($"Failed to set autostartup: {e.Message}");
         }
     }
 
@@ -41,7 +42,7 @@ internal static class AutoStart
         }
         catch (Exception e)
         {
-            DebugPrint($"Failed to remove autostartup: {e.Message}");
+            Debug.Print($"Failed to remove autostartup: {e.Message}");
         }
     }
 
@@ -61,14 +62,9 @@ internal static class AutoStart
         }
         catch (Exception e)
         {
-            DebugPrint($"Failed to check autostartup: {e.Message}");
+            Debug.Print($"Failed to check autostartup: {e.Message}");
         }
 
         return false;
-    }
-
-    private static void DebugPrint(string message)
-    {
-        System.Diagnostics.Debug.Print(message);
     }
 }
