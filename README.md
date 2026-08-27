@@ -22,7 +22,7 @@
   <img src="assets/Screenshot 2026-08-22 164612.png"/>
 </p>
 
-<br>
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
